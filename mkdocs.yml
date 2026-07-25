@@ -1,0 +1,69 @@
+site_name: Solar SIEM Knowledge Base
+site_description: База знаний Solar SIEM
+site_url: https://solar-siem.github.io/knowledge-base/
+repo_url: https://github.com/solar-siem/knowledge-base
+repo_name: solar-siem/knowledge-base
+
+theme:
+  name: material
+  language: ru
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-7
+        name: Светлая тема
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/brightness-4
+        name: Тёмная тема
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - navigation.indexes
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.code.annotate
+    - toc.follow
+  icon:
+    repo: fontawesome/brands/github
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.tabbed:
+      alternate_style: true
+  - attr_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+
+plugins:
+  - search:
+      lang: ru
+
+nav:
+  - Главная: index.md
+  - Начало работы:
+      - Обзор: getting-started/overview.md
+  - Детекты:
+      - Обзор: detections/overview.md
+  - Плейбуки:
+      - Обзор: playbooks/overview.md
