@@ -61,9 +61,9 @@ plugins:
 
 nav:
   - Главная: index.md
-  - Начало работы:
-      - Обзор: getting-started/overview.md
-  - Детекты:
-      - Обзор: detections/overview.md
-  - Плейбуки:
-      - Обзор: playbooks/overview.md
+  - Сбор событий:
+      - Обзор: data-collection/overview.md
+  - Детектирование:
+      - Обзор: detection/overview.md
+  - Реагирование:
+      - Обзор: response/overview.md
