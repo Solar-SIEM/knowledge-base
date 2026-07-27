@@ -82,3 +82,4 @@ nav:
       - Обзор: detection/overview.md
   - Реагирование:
       - Обзор: response/overview.md
+      - "Очистка журнала событий (Windows)": response/log-clearing.md
