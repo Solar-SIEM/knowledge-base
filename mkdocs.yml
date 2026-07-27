@@ -15,8 +15,8 @@ theme:
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default
-      primary: indigo
-      accent: indigo
+      primary: black
+      accent: deep orange
       toggle:
         icon: material/brightness-7
         name: Светлая тема
@@ -61,6 +61,7 @@ markdown_extensions:
       permalink: true
 
 extra_css:
+  - assets/stylesheets/light-theme.css
   - assets/stylesheets/dark-theme.css
 
 plugins:
