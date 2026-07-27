@@ -7,6 +7,8 @@ repo_name: solar-siem/knowledge-base
 theme:
   name: material
   language: ru
+  logo: assets/logo.svg
+  favicon: assets/logo.svg
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default
