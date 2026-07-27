@@ -4,6 +4,12 @@ site_url: https://solar-siem.github.io/knowledge-base/
 repo_url: https://github.com/solar-siem/knowledge-base
 repo_name: solar-siem/knowledge-base
 
+copyright: >
+  <a href="https://heftech.ru" target="_blank" rel="noopener">© 2026 ООО «Гефест Технолоджиз»</a>
+
+extra:
+  generator: false
+
 theme:
   name: material
   language: ru
