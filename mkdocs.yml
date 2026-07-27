@@ -9,6 +9,9 @@ theme:
   language: ru
   logo: assets/logo.svg
   favicon: assets/logo.svg
+  font:
+    text: Inter
+    code: Roboto Mono
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default
@@ -19,8 +22,8 @@ theme:
         name: Светлая тема
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
-      primary: indigo
-      accent: indigo
+      primary: black
+      accent: cyan
       toggle:
         icon: material/brightness-4
         name: Тёмная тема
@@ -56,6 +59,9 @@ markdown_extensions:
   - tables
   - toc:
       permalink: true
+
+extra_css:
+  - assets/stylesheets/dark-theme.css
 
 plugins:
   - search:
