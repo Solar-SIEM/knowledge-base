@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+         <loc>https://solar-siem.github.io/knowledge-base/</loc>
+         <lastmod>2026-07-28</lastmod>
+    </url>
+    <url>
+         <loc>https://solar-siem.github.io/knowledge-base/data-collection/overview/</loc>
+         <lastmod>2026-07-28</lastmod>
+    </url>
+    <url>
+         <loc>https://solar-siem.github.io/knowledge-base/detection/overview/</loc>
+         <lastmod>2026-07-28</lastmod>
+    </url>
+    <url>
+         <loc>https://solar-siem.github.io/knowledge-base/detections/overview/</loc>
+         <lastmod>2026-07-28</lastmod>
+    </url>
+    <url>
+         <loc>https://solar-siem.github.io/knowledge-base/getting-started/overview/</loc>
+         <lastmod>2026-07-28</lastmod>
+    </url>
+    <url>
+         <loc>https://solar-siem.github.io/knowledge-base/playbooks/overview/</loc>
+         <lastmod>2026-07-28</lastmod>
+    </url>
+    <url>
+         <loc>https://solar-siem.github.io/knowledge-base/response/log-clearing/</loc>
+         <lastmod>2026-07-28</lastmod>
+    </url>
+    <url>
+         <loc>https://solar-siem.github.io/knowledge-base/response/overview/</loc>
+         <lastmod>2026-07-28</lastmod>
+    </url>
+</urlset>

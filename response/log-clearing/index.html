@@ -1,0 +1,1956 @@
+
+<!doctype html>
+<html lang="ru" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="База знаний Solar SIEM">
+      
+      
+      
+        <link rel="canonical" href="https://solar-siem.github.io/knowledge-base/response/log-clearing/">
+      
+      
+        <link rel="prev" href="../overview/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/logo.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Очистка журнала событий (Windows) - Solar SIEM Knowledge Base</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/light-theme.css">
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/dark-theme.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="deep-orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#windows" class="md-skip">
+          Перейти к содержанию
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Верхний колонтитул">
+    <a href="../.." title="Solar SIEM Knowledge Base" class="md-header__button md-logo" aria-label="Solar SIEM Knowledge Base" data-md-component="logo">
+      
+  <img src="../../assets/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Solar SIEM Knowledge Base
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Очистка журнала событий (Windows)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="black" data-md-color-accent="deep-orange"  aria-label="Светлая тема"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Светлая тема" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="cyan"  aria-label="Тёмная тема"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Тёмная тема" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Поиск" placeholder="Поиск" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Поиск">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Очистить" aria-label="Очистить" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Инициализация поиска
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/solar-siem/knowledge-base" title="Перейти к репозиторию" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    solar-siem/knowledge-base
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Вкладки" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Главная
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../data-collection/overview/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Сбор событий
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../detection/overview/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Детектирование
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../overview/" class="md-tabs__link">
+          
+  
+  
+    
+  
+  Реагирование
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Навигация" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Solar SIEM Knowledge Base" class="md-nav__button md-logo" aria-label="Solar SIEM Knowledge Base" data-md-component="logo">
+      
+  <img src="../../assets/logo.svg" alt="logo">
+
+    </a>
+    Solar SIEM Knowledge Base
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/solar-siem/knowledge-base" title="Перейти к репозиторию" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    solar-siem/knowledge-base
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Главная
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Сбор событий
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Сбор событий
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data-collection/overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Обзор
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Детектирование
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Детектирование
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../detection/overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Обзор
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Реагирование
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Реагирование
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Обзор
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Очистка журнала событий (Windows)
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Очистка журнала событий (Windows)
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Содержание">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Содержание
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-powershell" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Настройка операций PowerShell
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Настройка операций PowerShell">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Операция 1. Получение списка активных сетевых соединений и процессов
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-powershell" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Операция 2. Поиск подозрительных процессов PowerShell
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Операция 3. Получение списка активных сессий пользователей
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Операция 4. Принудительное завершение локального процесса
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Операция 5. Завершение сессии конкретного локального пользователя
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Операция 6. Поиск заблокированных учётных записей в домене
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Операция 7. Аудит администраторов домена и времени их последнего входа
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Операция 8. Блокировка/разблокировка УЗ
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Операция 9. Экстренный сброс пароля доменного пользователя
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Настройка визуализаций
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Настройка визуализаций">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Визуализация 1. «Авторизация на хосте — круговая диаграмма»
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Визуализация 2. «Авторизация на хосте — столбчатая диаграмма»
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Настройка скриптов
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Настройка скриптов">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Скрипт 1. «Очистка журнала — идентификация»
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Скрипт 2. «Очистка журнала — локализация»
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Скрипт 3. «Очистка журнала — восстановление»
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Настройка сценария реагирования
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Настройка детектирования СИБ
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Настройка детектирования СИБ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1. Правило создания событий ИБ
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2. Агрегация инцидента
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3. Профиль сопоставления полей
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Генерация тестового инцидента
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Содержание">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Содержание
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-powershell" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Настройка операций PowerShell
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Настройка операций PowerShell">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Операция 1. Получение списка активных сетевых соединений и процессов
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-powershell" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Операция 2. Поиск подозрительных процессов PowerShell
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Операция 3. Получение списка активных сессий пользователей
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Операция 4. Принудительное завершение локального процесса
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Операция 5. Завершение сессии конкретного локального пользователя
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Операция 6. Поиск заблокированных учётных записей в домене
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Операция 7. Аудит администраторов домена и времени их последнего входа
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Операция 8. Блокировка/разблокировка УЗ
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Операция 9. Экстренный сброс пароля доменного пользователя
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. Настройка визуализаций
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Настройка визуализаций">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Визуализация 1. «Авторизация на хосте — круговая диаграмма»
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Визуализация 2. «Авторизация на хосте — столбчатая диаграмма»
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Настройка скриптов
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Настройка скриптов">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Скрипт 1. «Очистка журнала — идентификация»
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Скрипт 2. «Очистка журнала — локализация»
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Скрипт 3. «Очистка журнала — восстановление»
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Настройка сценария реагирования
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Настройка детектирования СИБ
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Настройка детектирования СИБ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1. Правило создания событий ИБ
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2. Агрегация инцидента
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3. Профиль сопоставления полей
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Генерация тестового инцидента
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="windows">Настройка сценария реагирования: очистка журнала событий (Windows)<a class="headerlink" href="#windows" title="Permanent link">&para;</a></h1>
+<p>Пошаговое руководство разворачивает сквозной сценарий детектирования и
+реагирования для одной из самых распространённых техник заметания следов —
+очистки журнала событий Windows (MITRE ATT&amp;CK
+<a href="https://attack.mitre.org/techniques/T1070/001/">T1070.001</a>, Indicator Removal:
+Clear Windows Event Logs). За событием <code>LogFileCleared</code> система должна не просто
+зафиксировать факт, а автоматически собрать контекст на хосте, изолировать
+учётную запись и вернуть её в строй после разбора инцидента.</p>
+<p>Сценарий целиком собирается из стандартных сущностей платформы и связывает их в
+единую цепочку:</p>
+<ol>
+<li><strong>Операции PowerShell</strong> — что агент умеет делать на хосте и в AD.</li>
+<li><strong>Визуализации</strong> — как представить данные об авторизациях по инциденту.</li>
+<li><strong>Скрипты</strong> — автоматизации, которые дёргают операции и визуализации по шагам.</li>
+<li><strong>Сценарий реагирования</strong> — этапы жизненного цикла инцидента (Identification →
+   Containment → Eradication → Recovery), на каждом из которых запускается свой скрипт.</li>
+<li><strong>Правило детектирования</strong> — привязка сценария к конкретному типу инцидента и
+   тонкая настройка агрегации и маппинга полей.</li>
+<li><strong>Тестовая генерация инцидента</strong> — проверка всей цепочки вживую.</li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Предварительное условие</p>
+<p>Во всех операциях этого сценария используется интеграция PowerShell. Прежде чем
+настраивать операции (<strong>Настройки → Интеграции → Операции</strong>), на хосте должен
+быть установлен <strong>Script Agent</strong> — иначе операции будет не к чему привязать.</p>
+</div>
+<h2 id="1-powershell">1. Настройка операций PowerShell<a class="headerlink" href="#1-powershell" title="Permanent link">&para;</a></h2>
+<p>Операции создаются в интеграции PowerShell (<strong>Настройки → Интеграции → Операции</strong>).
+Ниже — все девять операций сценария: шесть работают с локальным хостом, три — с
+Active Directory.</p>
+<table>
+<thead>
+<tr>
+<th>№</th>
+<th>Операция</th>
+<th>Область</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Получение списка активных сетевых соединений и процессов</td>
+<td>Windows (хост)</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Поиск подозрительных процессов PowerShell</td>
+<td>Windows (хост)</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Получение списка активных сессий пользователей</td>
+<td>Windows (хост)</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Принудительное завершение локального процесса</td>
+<td>Windows (хост)</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Завершение сессии конкретного локального пользователя</td>
+<td>Windows (хост)</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Поиск заблокированных учётных записей в домене</td>
+<td>Windows AD</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Аудит администраторов домена и времени их последнего входа</td>
+<td>Windows AD</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Блокировка/разблокировка УЗ</td>
+<td>Windows AD</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Экстренный сброс пароля доменного пользователя</td>
+<td>Windows AD</td>
+</tr>
+</tbody>
+</table>
+<h3 id="1">Операция 1. Получение списка активных сетевых соединений и процессов<a class="headerlink" href="#1" title="Permanent link">&para;</a></h3>
+<p><strong>Описание:</strong> поиск подозрительных установленных соединений на сервере агента с
+определением процессов, которые их инициировали.</p>
+<p><strong>Переменные:</strong> нет.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nv">$connections</span> <span class="p">=</span> <span class="k">foreach</span> <span class="p">(</span><span class="nv">$line</span> <span class="k">in</span> <span class="p">(</span><span class="n">netstat</span> <span class="n">-ano</span><span class="p">))</span> <span class="p">{</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    <span class="k">if</span> <span class="p">(</span><span class="nv">$line</span> <span class="o">-match</span> <span class="s1">&#39;^\s*(TCP)\s+(\S+)\s+(\S+)\s+(ESTABLISHED)\s+(\d+)\s*$&#39;</span><span class="p">)</span> <span class="p">{</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>        <span class="nv">$local</span>  <span class="p">=</span> <span class="nv">$matches</span><span class="p">[</span><span class="n">2</span><span class="p">]</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>        <span class="nv">$remote</span> <span class="p">=</span> <span class="nv">$matches</span><span class="p">[</span><span class="n">3</span><span class="p">]</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>        <span class="nv">$p_id</span>   <span class="p">=</span> <span class="nv">$matches</span><span class="p">[</span><span class="n">5</span><span class="p">]</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>        <span class="nv">$localPort</span>    <span class="p">=</span> <span class="p">(</span><span class="nv">$local</span> <span class="n">-split</span> <span class="s1">&#39;:&#39;</span><span class="p">)[-</span><span class="n">1</span><span class="p">]</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>        <span class="nv">$localAddress</span> <span class="p">=</span> <span class="p">(</span><span class="nv">$local</span> <span class="n">-split</span> <span class="s2">&quot;:$localPort&quot;</span><span class="p">)[</span><span class="n">0</span><span class="p">]</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>        <span class="nv">$remotePort</span>    <span class="p">=</span> <span class="p">(</span><span class="nv">$remote</span> <span class="n">-split</span> <span class="s1">&#39;:&#39;</span><span class="p">)[-</span><span class="n">1</span><span class="p">]</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>        <span class="nv">$remoteAddress</span> <span class="p">=</span> <span class="p">(</span><span class="nv">$remote</span> <span class="n">-split</span> <span class="s2">&quot;:$remotePort&quot;</span><span class="p">)[</span><span class="n">0</span><span class="p">]</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>        <span class="nv">$procName</span> <span class="p">=</span> <span class="p">(</span><span class="nb">Get-Process</span> <span class="n">-Id</span> <span class="nv">$p_id</span> <span class="n">-ErrorAction</span> <span class="n">SilentlyContinue</span><span class="p">).</span><span class="n">Name</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>        <span class="no">[ordered]</span><span class="p">@{</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>            <span class="n">LocalAddress</span>  <span class="p">=</span> <span class="nv">$localAddress</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>            <span class="n">LocalPort</span>     <span class="p">=</span> <span class="nv">$localPort</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>            <span class="n">RemoteAddress</span> <span class="p">=</span> <span class="nv">$remoteAddress</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>            <span class="n">RemotePort</span>    <span class="p">=</span> <span class="nv">$remotePort</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>            <span class="k">Process</span>       <span class="p">=</span> <span class="nv">$procName</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>        <span class="p">}</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a>    <span class="p">}</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="p">}</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a>
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a><span class="k">if</span> <span class="p">(</span><span class="nv">$connections</span><span class="p">)</span> <span class="p">{</span>
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a>    <span class="nv">$connections</span> <span class="p">|</span> <span class="nb">ConvertTo-Json</span> <span class="n">-Compress</span>
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a><span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>    <span class="s2">&quot;[]&quot;</span>
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a><span class="p">}</span>
+</code></pre></div>
+<h3 id="2-powershell">Операция 2. Поиск подозрительных процессов PowerShell<a class="headerlink" href="#2-powershell" title="Permanent link">&para;</a></h3>
+<p><strong>Описание:</strong> вывод всех активных процессов PowerShell на хосте агента с отображением
+полных командных строк запуска — нужно для выявления обфусцированного вредоносного
+кода.</p>
+<p><strong>Переменные:</strong> нет.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nv">$processes</span> <span class="p">=</span> <span class="k">try</span> <span class="p">{</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>    <span class="nv">$searcher</span> <span class="p">=</span> <span class="no">[wmisearcher]</span><span class="s2">&quot;SELECT ProcessId, CommandLine, ParentProcessId FROM Win32_Process WHERE Name = &#39;powershell.exe&#39; or Name = &#39;pwsh.exe&#39;&quot;</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>    <span class="nv">$searcher</span><span class="p">.</span><span class="n">Get</span><span class="p">()</span> <span class="p">|</span> <span class="k">ForEach</span><span class="n">-Object</span> <span class="p">{</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>        <span class="no">[ordered]</span><span class="p">@{</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>            <span class="n">ProcessId</span>       <span class="p">=</span> <span class="nv">$_</span><span class="p">.</span><span class="n">Properties</span><span class="p">[</span><span class="s1">&#39;ProcessId&#39;</span><span class="p">].</span><span class="n">Value</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>            <span class="n">CommandLine</span>     <span class="p">=</span> <span class="nv">$_</span><span class="p">.</span><span class="n">Properties</span><span class="p">[</span><span class="s1">&#39;CommandLine&#39;</span><span class="p">].</span><span class="n">Value</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>            <span class="n">ParentProcessId</span> <span class="p">=</span> <span class="nv">$_</span><span class="p">.</span><span class="n">Properties</span><span class="p">[</span><span class="s1">&#39;ParentProcessId&#39;</span><span class="p">].</span><span class="n">Value</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>        <span class="p">}</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>    <span class="p">}</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="p">}</span> <span class="k">catch</span> <span class="p">{</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>    <span class="k">try</span> <span class="p">{</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>        <span class="nb">Get-WmiObject</span> <span class="n">-Class</span> <span class="n">Win32_Process</span> <span class="n">-Filter</span> <span class="s2">&quot;Name = &#39;powershell.exe&#39; or Name = &#39;pwsh.exe&#39;&quot;</span> <span class="p">|</span> <span class="k">ForEach</span><span class="n">-Object</span> <span class="p">{</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>            <span class="no">[ordered]</span><span class="p">@{</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>                <span class="n">ProcessId</span>       <span class="p">=</span> <span class="nv">$_</span><span class="p">.</span><span class="n">ProcessId</span>
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>                <span class="n">CommandLine</span>     <span class="p">=</span> <span class="nv">$_</span><span class="p">.</span><span class="n">CommandLine</span>
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>                <span class="n">ParentProcessId</span> <span class="p">=</span> <span class="nv">$_</span><span class="p">.</span><span class="n">ParentProcessId</span>
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>            <span class="p">}</span>
+<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>        <span class="p">}</span>
+<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>    <span class="p">}</span> <span class="k">catch</span> <span class="p">{</span>
+<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>        <span class="nv">$wmicOutput</span> <span class="p">=</span> <span class="n">wmic</span> <span class="k">process</span> <span class="nb">where </span><span class="s2">&quot;name=&#39;powershell.exe&#39; or name=&#39;pwsh.exe&#39;&quot;</span> <span class="n">get</span> <span class="n">CommandLine</span><span class="p">,</span><span class="n">ParentProcessId</span><span class="p">,</span><span class="n">ProcessId</span> <span class="p">/</span><span class="n">format</span><span class="p">:</span><span class="n">csv</span> <span class="n">2</span><span class="p">&gt;</span><span class="nv">$null</span>
+<a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a>        <span class="k">if</span> <span class="p">(</span><span class="nv">$wmicOutput</span><span class="p">)</span> <span class="p">{</span>
+<a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a>            <span class="nv">$wmicOutput</span> <span class="p">|</span> <span class="nb">Select-Object</span> <span class="n">-Skip</span> <span class="n">2</span> <span class="p">|</span> <span class="k">ForEach</span><span class="n">-Object</span> <span class="p">{</span>
+<a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a>                <span class="nv">$parts</span> <span class="p">=</span> <span class="nv">$_</span> <span class="n">-split</span> <span class="s1">&#39;,&#39;</span> <span class="p">|</span> <span class="nb">Where-Object</span> <span class="p">{</span> <span class="nv">$_</span> <span class="p">}</span>
+<a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a>                <span class="k">if</span> <span class="p">(</span><span class="nv">$parts</span><span class="p">.</span><span class="n">Count</span> <span class="o">-ge</span> <span class="n">3</span><span class="p">)</span> <span class="p">{</span>
+<a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a>                    <span class="no">[ordered]</span><span class="p">@{</span>
+<a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a>                        <span class="n">ProcessId</span>       <span class="p">=</span> <span class="nv">$parts</span><span class="p">[-</span><span class="n">1</span><span class="p">].</span><span class="n">Trim</span><span class="p">()</span>
+<a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a>                        <span class="n">CommandLine</span>     <span class="p">=</span> <span class="nv">$parts</span><span class="p">[</span><span class="n">1</span><span class="p">].</span><span class="n">Trim</span><span class="p">()</span>
+<a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a>                        <span class="n">ParentProcessId</span> <span class="p">=</span> <span class="nv">$parts</span><span class="p">[</span><span class="n">2</span><span class="p">].</span><span class="n">Trim</span><span class="p">()</span>
+<a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a>                    <span class="p">}</span>
+<a id="__codelineno-1-30" name="__codelineno-1-30" href="#__codelineno-1-30"></a>                <span class="p">}</span>
+<a id="__codelineno-1-31" name="__codelineno-1-31" href="#__codelineno-1-31"></a>            <span class="p">}</span>
+<a id="__codelineno-1-32" name="__codelineno-1-32" href="#__codelineno-1-32"></a>        <span class="p">}</span>
+<a id="__codelineno-1-33" name="__codelineno-1-33" href="#__codelineno-1-33"></a>    <span class="p">}</span>
+<a id="__codelineno-1-34" name="__codelineno-1-34" href="#__codelineno-1-34"></a><span class="p">}</span>
+<a id="__codelineno-1-35" name="__codelineno-1-35" href="#__codelineno-1-35"></a>
+<a id="__codelineno-1-36" name="__codelineno-1-36" href="#__codelineno-1-36"></a><span class="k">if</span> <span class="p">(</span><span class="nv">$processes</span><span class="p">)</span> <span class="p">{</span>
+<a id="__codelineno-1-37" name="__codelineno-1-37" href="#__codelineno-1-37"></a>    <span class="nv">$processes</span> <span class="p">|</span> <span class="nb">ConvertTo-Json</span> <span class="n">-Compress</span>
+<a id="__codelineno-1-38" name="__codelineno-1-38" href="#__codelineno-1-38"></a><span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+<a id="__codelineno-1-39" name="__codelineno-1-39" href="#__codelineno-1-39"></a>    <span class="s2">&quot;[]&quot;</span>
+<a id="__codelineno-1-40" name="__codelineno-1-40" href="#__codelineno-1-40"></a><span class="p">}</span>
+</code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">Тройной fallback</p>
+<p>Скрипт последовательно пробует WMI-searcher → <code>Get-WmiObject</code> → <code>wmic</code>. Это
+защищает операцию от расхождений в возможностях PowerShell/WMI на разных версиях
+Windows и старых образах, где <code>Get-WmiObject</code> уже удалён.</p>
+</div>
+<h3 id="3">Операция 3. Получение списка активных сессий пользователей<a class="headerlink" href="#3" title="Permanent link">&para;</a></h3>
+<p><strong>Описание:</strong> сбор списка всех пользователей, имеющих в данный момент активные RDP
+или интерактивные сессии на сервере агента.</p>
+<p><strong>Переменные:</strong> нет.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">quser</span> <span class="n">2</span><span class="p">&gt;</span><span class="nv">$null</span>
+</code></pre></div>
+<h3 id="4">Операция 4. Принудительное завершение локального процесса<a class="headerlink" href="#4" title="Permanent link">&para;</a></h3>
+<p><strong>Описание:</strong> аварийная остановка вредоносного процесса на хосте агента по его имени.</p>
+<p><strong>Переменные:</strong> <code>ProcessName</code> (строка).</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nb">Stop-Process</span> <span class="n">-Name</span> <span class="s2">&quot;{{ProcessName}}&quot;</span> <span class="n">-Force</span>
+</code></pre></div>
+<h3 id="5">Операция 5. Завершение сессии конкретного локального пользователя<a class="headerlink" href="#5" title="Permanent link">&para;</a></h3>
+<p><strong>Описание:</strong> принудительный сброс активного RDP-подключения пользователя на хосте
+агента.</p>
+<p><strong>Переменные:</strong> <code>Username</code> (строка).</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nv">$session</span> <span class="p">=</span> <span class="p">(</span><span class="n">quser</span> <span class="p">|</span> <span class="nb">Select-String</span> <span class="s2">&quot;{{Username}}&quot;</span><span class="p">).</span><span class="n">ToString</span><span class="p">()</span> <span class="n">-split</span> <span class="s1">&#39; +&#39;</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="n">logoff</span> <span class="nv">$session</span><span class="p">[</span><span class="n">2</span><span class="p">]</span>
+</code></pre></div>
+<h3 id="6">Операция 6. Поиск заблокированных учётных записей в домене<a class="headerlink" href="#6" title="Permanent link">&para;</a></h3>
+<p><strong>Описание:</strong> выявление учётных записей пользователей, заблокированных в домене
+из-за превышения попыток ввода пароля.</p>
+<p><strong>Переменные:</strong> нет.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nb">Search-ADAccount</span> <span class="n">-AccountDisabled</span> <span class="p">|</span> <span class="nb">Select-Object</span> <span class="n">SamAccountName</span><span class="p">,</span> <span class="n">Name</span><span class="p">,</span> <span class="n">LockedOut</span>
+</code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">На проверку</p>
+<p>Название операции и выбираемое поле <code>LockedOut</code> говорят о поиске
+<strong>заблокированных из-за неверного пароля</strong> учётных записей, а ключ
+<code>-AccountDisabled</code> в <code>Search-ADAccount</code> возвращает <strong>отключённые</strong> учётные
+записи — это разные состояния объекта в AD. Возможно, здесь имелся в виду ключ
+<code>-LockedOut</code>. Перед использованием операции в проде стоит сверить с автором
+сценария, какое поведение задумывалось изначально.</p>
+</div>
+<h3 id="7">Операция 7. Аудит администраторов домена и времени их последнего входа<a class="headerlink" href="#7" title="Permanent link">&para;</a></h3>
+<p><strong>Описание:</strong> сбор списка учётных записей из группы «Domain Admins» с проверкой
+времени их последней аутентификации.</p>
+<p><strong>Переменные:</strong> нет.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="nb">Get-ADGroupMember</span> <span class="n">-Identity</span> <span class="s2">&quot;Domain Admins&quot;</span> <span class="p">|</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>    <span class="k">ForEach</span><span class="n">-Object</span> <span class="p">{</span> <span class="nb">Get-ADUser</span> <span class="n">-Identity</span> <span class="nv">$_</span><span class="p">.</span><span class="n">SamAccountName</span> <span class="n">-Properties</span> <span class="n">LastLogonDate</span> <span class="p">}</span> <span class="p">|</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>    <span class="nb">Select-Object</span> <span class="n">SamAccountName</span><span class="p">,</span> <span class="n">Name</span><span class="p">,</span> <span class="n">LastLogonDate</span><span class="p">,</span> <span class="n">Enabled</span>
+</code></pre></div>
+<h3 id="8">Операция 8. Блокировка/разблокировка УЗ<a class="headerlink" href="#8" title="Permanent link">&para;</a></h3>
+<p><strong>Описание:</strong> блокировка или разблокировка учётной записи в домене.</p>
+<p><strong>Переменные:</strong> <code>Username</code> (строка), <code>Enabled</code> (логический).</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nb">Set-ADUser</span> <span class="n">-Identity</span> <span class="p">{{</span><span class="n">Username</span><span class="p">}}</span> <span class="n">-Enabled</span> <span class="p">${{</span><span class="n">Enabled</span><span class="p">}}</span>
+</code></pre></div>
+<h3 id="9">Операция 9. Экстренный сброс пароля доменного пользователя<a class="headerlink" href="#9" title="Permanent link">&para;</a></h3>
+<p><strong>Описание:</strong> смена пароля пользователя на случайный временный с требованием
+обязательной смены при следующем входе в сеть.</p>
+<p><strong>Переменные:</strong> <code>Username</code> (строка), <code>TempPassword</code> (строка).</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="nv">$SecPassword</span> <span class="p">=</span> <span class="nb">ConvertTo-SecureString</span> <span class="s2">&quot;{{TempPassword}}&quot;</span> <span class="n">-AsPlainText</span> <span class="n">-Force</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="nb">Set-ADAccountPassword</span> <span class="n">-Identity</span> <span class="s2">&quot;{{Username}}&quot;</span> <span class="n">-NewPassword</span> <span class="nv">$SecPassword</span> <span class="n">-Reset</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="nb">Set-ADUser</span> <span class="n">-Identity</span> <span class="s2">&quot;{{Username}}&quot;</span> <span class="n">-ChangePasswordAtLogon</span> <span class="nv">$true</span>
+</code></pre></div>
+<div class="admonition danger">
+<p class="admonition-title">Деструктивные операции</p>
+<p>Операции 4, 5, 8 и 9 необратимо меняют состояние хоста, сессии или учётной
+записи в проде (kill процесса, разрыв RDP-сессии, блокировка УЗ, сброс пароля).
+В сценарии реагирования они должны запускаться только на этапах <strong>Локализации</strong>
+и <strong>Восстановления</strong>, никогда — на этапе идентификации.</p>
+</div>
+<h2 id="2">2. Настройка визуализаций<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
+<p>Визуализации настраиваются в <strong>Настройки → Визуализации</strong> и используются скриптами
+идентификации, чтобы приложить к инциденту наглядную картину авторизаций на хосте.</p>
+<h3 id="1_1">Визуализация 1. «Авторизация на хосте — круговая диаграмма»<a class="headerlink" href="#1_1" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Блок</th>
+<th>Параметр</th>
+<th>Значение</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Общее</td>
+<td>Имя</td>
+<td>Авторизация на хосте - круговая диаграмма</td>
+</tr>
+<tr>
+<td>Схема данных</td>
+<td>Тип источника</td>
+<td>Анализ данных</td>
+</tr>
+<tr>
+<td>Настройки</td>
+<td>Тип</td>
+<td>Круговая диаграмма</td>
+</tr>
+<tr>
+<td>Настройки</td>
+<td>Поле</td>
+<td>Destination User Name</td>
+</tr>
+<tr>
+<td>Настройки</td>
+<td>Метрика</td>
+<td>Count</td>
+</tr>
+<tr>
+<td>Настройки</td>
+<td>Аргумент метрики</td>
+<td>All rows</td>
+</tr>
+</tbody>
+</table>
+<p><img alt="Визуализация 1 — вкладка «Настройки»" src="../../assets/images/response/log-clearing/viz-1-settings.png" /></p>
+<h3 id="2_1">Визуализация 2. «Авторизация на хосте — столбчатая диаграмма»<a class="headerlink" href="#2_1" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Блок</th>
+<th>Параметр</th>
+<th>Значение</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Общее</td>
+<td>Имя</td>
+<td>Авторизация на хосте - Столбчатая диаграмма</td>
+</tr>
+<tr>
+<td>Схема данных</td>
+<td>Тип источника</td>
+<td>Анализ данных</td>
+</tr>
+<tr>
+<td>Настройки</td>
+<td>Тип</td>
+<td>Столбчатая диаграмма с накоплением</td>
+</tr>
+<tr>
+<td>Горизонтальная ось</td>
+<td>Поле</td>
+<td>Collected Date</td>
+</tr>
+<tr>
+<td>Горизонтальная ось</td>
+<td>Интервал группировки</td>
+<td>Час</td>
+</tr>
+<tr>
+<td>Горизонтальная ось</td>
+<td>Сортировка / порядок</td>
+<td>Collected Date, по возрастанию</td>
+</tr>
+<tr>
+<td>Вертикальная ось</td>
+<td>Агрегатные функции</td>
+<td>count all rows</td>
+</tr>
+<tr>
+<td>Серия</td>
+<td>Поле</td>
+<td>Destination User Name</td>
+</tr>
+</tbody>
+</table>
+<p><img alt="Визуализация 2 — вкладка «Настройки»" src="../../assets/images/response/log-clearing/viz-2-settings.png" /></p>
+<h2 id="3_1">3. Настройка скриптов<a class="headerlink" href="#3_1" title="Permanent link">&para;</a></h2>
+<p>Скрипты (<strong>Настройки → Скрипты</strong>) — это оркестрация: каждый шаг вызывает операцию
+интеграции или визуализацию и передаёт данные дальше по цепочке. Во всех трёх
+скриптах точка входа принимает один и тот же входной параметр — <code>se</code> типа
+<strong>«Событие ИБ»</strong>, то есть сработавшее событие <code>LogFileCleared</code>, из которого скрипты
+достают имя хоста и имя учётной записи.</p>
+<h3 id="1_2">Скрипт 1. «Очистка журнала — идентификация»<a class="headerlink" href="#1_2" title="Permanent link">&para;</a></h3>
+<p>Собирает контекст вокруг события, ничего не меняя на хосте.</p>
+<p><strong>Переменные скрипта:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Имя</th>
+<th>Тип</th>
+<th>Значение</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>$Now</code></td>
+<td>Дата и время</td>
+<td><code>now()</code></td>
+</tr>
+<tr>
+<td><code>$From</code></td>
+<td>Дата и время</td>
+<td><code>addHours($Now, -24)</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Точка входа:</strong> параметр <code>se</code>, тип «Событие ИБ».</p>
+<p><img alt="Скрипт «Очистка журнала — идентификация» — вкладка «Общее»" src="../../assets/images/response/log-clearing/script-1-general.png" />
+<img alt="Скрипт «Очистка журнала — идентификация» — переменные $Now и $From" src="../../assets/images/response/log-clearing/script-1-variables.png" />
+<img alt="Скрипт «Очистка журнала — идентификация» — точка входа с параметром se" src="../../assets/images/response/log-clearing/script-1-entry.png" /></p>
+<p><strong>Шаги:</strong></p>
+<ol>
+<li>
+<p><strong>Получение активных сессий на хосте</strong> — запуск интеграции PowerShell, операция
+   «Получение списка активных сессий пользователей».</p>
+<p><img alt="Шаг «Получение активных сессий на хосте»" src="../../assets/images/response/log-clearing/script-1-step-sessions.png" /></p>
+</li>
+<li>
+<p><strong>Авторизации на хосте — круговая диаграмма</strong> — запуск интеграции «Анализ
+   данных», операция «Получить значения из анализа данных», визуализация —
+   круговая диаграмма из блока 2. Параметры:</p>
+<ul>
+<li><code>offset</code> = <code>0</code> (константа), <code>limit</code> = <code>1000</code> (константа);</li>
+<li><code>fromdate</code> = <code>$From</code>, <code>todate</code> = <code>$Now</code> (переменные);</li>
+<li>фильтр: <code>Destination Host ID equals se</code> (имя системы из входного события)
+   <strong>или</strong> <code>Event ID equals 4624</code> (успешный вход, константа).</li>
+</ul>
+<p><img alt="Шаг «Авторизации на хосте — круговая диаграмма»" src="../../assets/images/response/log-clearing/script-1-step-auth-pie.png" /></p>
+</li>
+<li>
+<p><strong>Авторизации на хосте — столбчатая диаграмма</strong> — тот же вызов «Получить
+   значения из анализа данных» с идентичными фильтром и параметрами, но с
+   визуализацией-столбчатой диаграммой из блока 2 (скриншот этого шага не
+   приводим — он совпадает с предыдущим с точностью до выбранной визуализации).</p>
+</li>
+<li>
+<p><strong>Получение списка активных сетевых соединений и процессов</strong> — запуск
+   интеграции PowerShell, операция «Получение списка активных сетевых соединений и
+   процессов».</p>
+<p><img alt="Шаг «Получение списка активных сетевых соединений и процессов»" src="../../assets/images/response/log-clearing/script-1-step-network.png" /></p>
+</li>
+<li>
+<p>Переход в точку выхода.</p>
+</li>
+</ol>
+<h3 id="2_2">Скрипт 2. «Очистка журнала — локализация»<a class="headerlink" href="#2_2" title="Permanent link">&para;</a></h3>
+<p>Останавливает активность скомпрометированной учётной записи.</p>
+<p><strong>Точка входа:</strong> параметр <code>se</code>, тип «Событие ИБ».</p>
+<p><img alt="Скрипт «Очистка журнала — локализация» — вкладка «Общее»" src="../../assets/images/response/log-clearing/script-2-general.png" /></p>
+<p><strong>Шаги:</strong></p>
+<ol>
+<li>
+<p><strong>Завершение сессии пользователя</strong> — запуск интеграции PowerShell, операция
+   «Завершение сессии конкретного локального пользователя». Параметр <code>Username</code> =
+   <code>se</code> (источник — имя учётной записи из входного параметра).</p>
+<p><img alt="Шаг «Завершение сессии пользователя»" src="../../assets/images/response/log-clearing/script-2-step-logoff.png" /></p>
+</li>
+<li>
+<p><strong>Блокировка доменной УЗ пользователя</strong> — запуск интеграции PowerShell, операция
+   «Блокировка/разблокировка УЗ». Параметр <code>Username</code> = <code>se</code> (имя учётной записи),
+   <code>Enabled</code> = <code>false</code> (константа).</p>
+<p><img alt="Шаг «Блокировка доменной УЗ пользователя»" src="../../assets/images/response/log-clearing/script-2-step-lock.png" /></p>
+</li>
+<li>
+<p>Переход в точку выхода.</p>
+</li>
+</ol>
+<h3 id="3_2">Скрипт 3. «Очистка журнала — восстановление»<a class="headerlink" href="#3_2" title="Permanent link">&para;</a></h3>
+<p>Возвращает учётную запись в рабочее состояние после разбора инцидента.</p>
+<p><strong>Точка входа:</strong> параметр <code>se</code>, тип «Событие ИБ».</p>
+<p><img alt="Скрипт «Очистка журнала — восстановление» — вкладка «Общее»" src="../../assets/images/response/log-clearing/script-3-general.png" /></p>
+<p><strong>Шаги:</strong></p>
+<ol>
+<li>
+<p><strong>Разблокировка доменной УЗ пользователя</strong> — запуск интеграции PowerShell,
+   операция «Блокировка/разблокировка УЗ». Параметр <code>Username</code> = <code>se</code> (имя учётной
+   записи), <code>Enabled</code> = <code>true</code> (константа).</p>
+<p><img alt="Шаг «Разблокировка доменной УЗ пользователя»" src="../../assets/images/response/log-clearing/script-3-step-unlock.png" /></p>
+</li>
+<li>
+<p>Переход в точку выхода.</p>
+</li>
+</ol>
+<h2 id="4_1">4. Настройка сценария реагирования<a class="headerlink" href="#4_1" title="Permanent link">&para;</a></h2>
+<p>Сценарий реагирования (<strong>Работа с инцидентами → Сценарии реагирования</strong>) связывает
+три скрипта с этапами жизненного цикла инцидента.</p>
+<p><strong>Имя:</strong> Очистка журнала. <strong>Регламент:</strong> Регламент обработки СИБ.</p>
+<p><img alt="Сценарий реагирования «Очистка журнала» — вкладка «Общее»" src="../../assets/images/response/log-clearing/scenario-general.png" /></p>
+<table>
+<thead>
+<tr>
+<th>Этап</th>
+<th>Действие</th>
+<th>Переход</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Идентификация</td>
+<td>Запуск скрипта «Очистка журнала — идентификация» (параметр <code>se</code> — Событие ИБ)</td>
+<td>По условию (безусловно) → Локализация</td>
+</tr>
+<tr>
+<td>Локализация</td>
+<td>Запуск скрипта «Очистка журнала — локализация» (параметр <code>se</code> — Событие ИБ)</td>
+<td>По условию (безусловно) → Уничтожение</td>
+</tr>
+<tr>
+<td>Уничтожение</td>
+<td>Действие не задано — точка для ручного решения аналитика</td>
+<td>Вручную → Восстановление <strong>или</strong> вручную → Финальный этап</td>
+</tr>
+<tr>
+<td>Восстановление</td>
+<td>Запуск скрипта «Очистка журнала — восстановление» (параметр <code>se</code> — Событие ИБ)</td>
+<td>По условию (безусловно) → Финальный этап</td>
+</tr>
+<tr>
+<td>Финальный этап</td>
+<td>—</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p><img alt="Все пять этапов сценария и настройка этапа «Идентификация»" src="../../assets/images/response/log-clearing/scenario-stages.png" />
+<img alt="Этап «Локализация»" src="../../assets/images/response/log-clearing/scenario-localization.png" />
+<img alt="Этап «Уничтожение» — два ручных перехода" src="../../assets/images/response/log-clearing/scenario-eradication.png" />
+<img alt="Этап «Восстановление»" src="../../assets/images/response/log-clearing/scenario-recovery.png" /></p>
+<p>Этап «Уничтожение» намеренно оставлен без автоматизации: сброс пароля (операция 9)
+или другие деструктивные шаги отдаются на усмотрение аналитика после того, как
+идентификация подтвердила инцидент, а не выполняются автоматически.</p>
+<h2 id="5_1">5. Настройка детектирования СИБ<a class="headerlink" href="#5_1" title="Permanent link">&para;</a></h2>
+<p>Три точки конфигурации нужно свести вместе, чтобы событие <code>LogFileCleared</code>
+превращалось в инцидент с уже привязанным сценарием реагирования.</p>
+<h3 id="51">5.1. Правило создания событий ИБ<a class="headerlink" href="#51" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>Работа с инцидентами → Правила создания событий ИБ</strong> → открыть правило
+   <code>WorkFlow_CreateNewSecurityEvent</code> и включить его.</li>
+<li>
+<p>В блоке <strong>«Правила переопределения значений свойств»</strong> добавить условие:
+   <code>Detection Id equals INC_025</code> → <code>Сценарий реагирования</code> = <strong>Очистка журнала</strong>.</p>
+<p><img alt="Правила переопределения значений свойств: Detection Id = INC_025 → Сценарий реагирования = Очистка журнала" src="../../assets/images/response/log-clearing/detection-rule-override.png" /></p>
+</li>
+</ol>
+<h3 id="52">5.2. Агрегация инцидента<a class="headerlink" href="#52" title="Permanent link">&para;</a></h3>
+<p><strong>Детектирование → Стандартные справочники → <code>WorkFlow_Incident_Settings_by_Customer</code></strong>
+→ найти строку <code>INC_025</code> → выставить <code>AggregationTime</code> в миллисекундах (например,
+<code>1000</code>).</p>
+<p><img alt="Справочник WorkFlow_Incident_Settings_by_Customer со строкой INC_025" src="../../assets/images/response/log-clearing/detection-aggregation.png" /></p>
+<h3 id="53">5.3. Профиль сопоставления полей<a class="headerlink" href="#53" title="Permanent link">&para;</a></h3>
+<p><strong>Источники и сбор событий → Профили сопоставления → Microsoft Windows → Поля
+модели события → Source User Name.</strong></p>
+<p><img alt="Профили сопоставления: список профилей и поля модели события Microsoft Windows" src="../../assets/images/response/log-clearing/detection-mapping-profile.png" /></p>
+<p>В выражениях справа нужно найти <code>#lower_LogFileCleared_SubjectUserName</code> и заменить
+его значение с <code>lower(winlog.user_data.SubjectUserName)</code> на:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>winlog.user_data.SubjectUserName
+</code></pre></div>
+<p><img alt="Список выражений профиля с полем #lower_LogFileCleared_SubjectUserName" src="../../assets/images/response/log-clearing/detection-mapping-expression.png" /></p>
+<div class="admonition warning">
+<p class="admonition-title">Не перепутайте выражение</p>
+<p>В списке выражений профиля соседствуют похожие имена (<code>#lower_requester</code>,
+<code>#lower_SubjectUserName</code>, <code>#lower_securityuser</code> и т. д.) — редактируется именно
+<code>#lower_LogFileCleared_SubjectUserName</code>. Уберите обёртку <code>lower(...)</code> целиком,
+иначе имя пользователя в модели события окажется в нижнем регистре и не
+совпадёт с реальным <code>SamAccountName</code>, который скрипты передают операциям AD.</p>
+</div>
+<p>Сохраните изменения профиля.</p>
+<h2 id="6_1">6. Генерация тестового инцидента<a class="headerlink" href="#6_1" title="Permanent link">&para;</a></h2>
+<p>Проверка всей цепочки — сымитировать саму технику атаки на хосте, где установлен
+Script Agent:</p>
+<ol>
+<li>
+<p>Откройте <strong>Event Viewer</strong>.</p>
+<p><img alt="Event Viewer: журнал «Setup» выбран, событий нет" src="../../assets/images/response/log-clearing/eventviewer-initial.png" /></p>
+</li>
+<li>
+<p>В дереве слева выберите любой журнал (например, «Setup»), нажмите правой кнопкой
+   мыши и выберите <strong>Clear Log…</strong></p>
+<p><img alt="Контекстное меню журнала с пунктом Clear Log…" src="../../assets/images/response/log-clearing/eventviewer-clear-menu.png" /></p>
+</li>
+<li>
+<p>В диалоге подтверждения нажмите <strong>Clear</strong>.</p>
+<p><img alt="Диалог подтверждения: Save and Clear / Clear / Cancel" src="../../assets/images/response/log-clearing/eventviewer-clear-dialog.png" /></p>
+</li>
+</ol>
+<div class="admonition danger">
+<p class="admonition-title">Только в тестовом контуре</p>
+<p>Очистка журнала событий — это то самое действие (Windows Event ID <code>1102</code>,
+«The audit log was cleared»), которое сценарий должен детектировать. Выполняйте
+шаг исключительно на тестовом хосте: это симуляция действий злоумышленника, а
+не рутинная операция обслуживания.</p>
+</div>
+<p>После этого действия ожидаемая цепочка выглядит так: агент собирает событие
+<code>LogFileCleared</code> → профиль сопоставления «Microsoft Windows» подставляет имя
+учётной записи из <code>winlog.user_data.SubjectUserName</code> → правило
+<code>WorkFlow_CreateNewSecurityEvent</code> создаёт событие ИБ и по <code>Detection Id = INC_025</code>
+привязывает сценарий «Очистка журнала» → инцидент агрегируется по настроенному
+<code>AggregationTime</code> → сценарий реагирования последовательно проходит
+Идентификацию (сбор сессий, авторизаций и сетевых соединений), Локализацию
+(завершение сессии и блокировка УЗ) и — после решения аналитика на этапе
+Уничтожения — Восстановление (разблокировка УЗ).</p>
+<p>Если инцидент не создался или сценарий не запустился — в первую очередь проверьте
+пункты 5.1–5.3: это самые частые точки ошибки при повторной настройке сценария.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  К началу
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      <a href="https://heftech.ru" target="_blank" rel="noopener">© 2026 ООО «Гефест Технолоджиз»</a>
+
+    </div>
+  
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.top", "navigation.indexes", "search.suggest", "search.highlight", "content.code.copy", "content.code.annotate", "toc.follow"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u0421\u043a\u043e\u043f\u0438\u0440\u043e\u0432\u0430\u043d\u043e \u0432 \u0431\u0443\u0444\u0435\u0440", "clipboard.copy": "\u041a\u043e\u043f\u0438\u0440\u043e\u0432\u0430\u0442\u044c \u0432 \u0431\u0443\u0444\u0435\u0440", "search.result.more.one": "\u0415\u0449\u0451 1 \u043d\u0430 \u044d\u0442\u043e\u0439 \u0441\u0442\u0440\u0430\u043d\u0438\u0446\u0435", "search.result.more.other": "\u0415\u0449\u0451 # \u043d\u0430 \u044d\u0442\u043e\u0439 \u0441\u0442\u0440\u0430\u043d\u0438\u0446\u0435", "search.result.none": "\u0421\u043e\u0432\u043f\u0430\u0434\u0435\u043d\u0438\u0439 \u043d\u0435 \u043d\u0430\u0439\u0434\u0435\u043d\u043e", "search.result.one": "\u041d\u0430\u0439\u0434\u0435\u043d\u043e 1 \u0441\u043e\u0432\u043f\u0430\u0434\u0435\u043d\u0438\u0435", "search.result.other": "\u041d\u0430\u0439\u0434\u0435\u043d\u043e \u0441\u043e\u0432\u043f\u0430\u0434\u0435\u043d\u0438\u0439: #", "search.result.placeholder": "\u041d\u0430\u0447\u043d\u0438\u0442\u0435 \u043f\u0435\u0447\u0430\u0442\u0430\u0442\u044c \u0434\u043b\u044f \u043f\u043e\u0438\u0441\u043a\u0430", "search.result.term.missing": "\u041e\u0442\u0441\u0443\u0442\u0441\u0442\u0432\u0443\u0435\u0442", "select.version": "\u0412\u044b\u0431\u0435\u0440\u0438\u0442\u0435 \u0432\u0435\u0440\u0441\u0438\u044e"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>
