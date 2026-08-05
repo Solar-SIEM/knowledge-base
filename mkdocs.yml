@@ -82,4 +82,5 @@ nav:
       - Обзор: detection/overview.md
   - Реагирование:
       - Обзор: response/overview.md
+      - "Запуск hydra (Linux)": response/hydra-linux.md
       - "Очистка журнала событий (Windows)": response/log-clearing.md
