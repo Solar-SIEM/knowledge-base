@@ -76,6 +76,9 @@ plugins:
 
 nav:
   - Главная: index.md
+  - Установка:
+      - Обзор: installation/overview.md
+      - "Выпуск SSL-сертификата с помощью AD CS": installation/ssl_cert_creation.md
   - Сбор событий:
       - Обзор: data-collection/overview.md
   - Детектирование:
@@ -84,6 +87,9 @@ nav:
       - Обзор: response/overview.md
       - "Запуск hydra (Linux)": response/hydra-linux.md
       - "Очистка журнала событий (Windows)": response/log-clearing.md
-  - Установка:
-      - Обзор: installation/overview.md
-      - "Выпуск SSL-сертификата с помощью AD CS": installation/ssl_cert_creation.md
+  - Решение проблем:
+      - Обзор: troubleshooting/overview.md
+      - "Cбор диагностического архива": troubleshooting/log-collection.md
+      - "Диагностика и управление кластером Kubernetes через k9s": troubleshooting/k9s.md
+
+
