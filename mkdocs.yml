@@ -76,6 +76,9 @@ plugins:
 
 nav:
   - Главная: index.md
+  - Установка:
+      - Обзор: installation/overview.md
+      - "Выпуск SSL-сертификата с помощью AD CS": installation/ssl_cert_creation.md
   - Новичку:
       - Обзор: to_newer/overview.md
       - "Что такое SIEM?": to_newer/what_is_siem.md
@@ -87,6 +90,12 @@ nav:
       - Обзор: response/overview.md
       - "Запуск hydra (Linux)": response/hydra-linux.md
       - "Очистка журнала событий (Windows)": response/log-clearing.md
+  - Решение проблем:
+      - Обзор: troubleshooting/overview.md
+      - "Cбор диагностического архива": troubleshooting/log-collection.md
+      - "Диагностика и управление кластером Kubernetes через k9s": troubleshooting/k9s.md
+
+
   - Установка:
       - Обзор: installation/overview.md
       - "Выпуск SSL-сертификата с помощью AD CS": installation/ssl_cert_creation.md
