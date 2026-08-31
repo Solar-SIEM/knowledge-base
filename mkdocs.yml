@@ -79,6 +79,9 @@ nav:
   - Установка:
       - Обзор: installation/overview.md
       - "Выпуск SSL-сертификата с помощью AD CS": installation/ssl_cert_creation.md
+  - Новичку:
+      - Обзор: to_newer/overview.md
+      - "Что такое SIEM?": to_newer/what_is_siem.md
   - Сбор событий:
       - Обзор: data-collection/overview.md
   - Детектирование:
@@ -93,3 +96,6 @@ nav:
       - "Диагностика и управление кластером Kubernetes через k9s": troubleshooting/k9s.md
 
 
+  - Установка:
+      - Обзор: installation/overview.md
+      - "Выпуск SSL-сертификата с помощью AD CS": installation/ssl_cert_creation.md
