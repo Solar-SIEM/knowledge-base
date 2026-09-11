@@ -90,6 +90,7 @@ nav:
       - Обзор: response/overview.md
       - "Запуск hydra (Linux)": response/hydra-linux.md
       - "Очистка журнала событий (Windows)": response/log-clearing.md
+      - "Дамп Active Directory Domain Database (Windows)": response/ntds.md
   - Решение проблем:
       - Обзор: troubleshooting/overview.md
       - "Cбор диагностического архива": troubleshooting/log-collection.md
