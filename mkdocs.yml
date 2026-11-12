@@ -96,7 +96,3 @@ nav:
       - "Cбор диагностического архива": troubleshooting/log-collection.md
       - "Диагностика и управление кластером Kubernetes через k9s": troubleshooting/k9s.md
 
-
-  - Установка:
-      - Обзор: installation/overview.md
-      - "Выпуск SSL-сертификата с помощью AD CS": installation/ssl_cert_creation.md
