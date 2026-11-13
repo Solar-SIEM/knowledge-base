@@ -84,6 +84,9 @@ nav:
       - "Что такое SIEM?": to_newer/what_is_siem.md
   - Сбор событий:
       - Обзор: data-collection/overview.md
+  - Интеграции:
+      - Обзор: integrations/overview.md
+      - "Интеграция Solar DNS RADAR и Solar SIEM": integrations/dns-radar-proxy-setup.md
   - Детектирование:
       - Обзор: detection/overview.md
   - Реагирование:
