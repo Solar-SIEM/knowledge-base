@@ -179,7 +179,7 @@ server {
 | `cache` | `ttl` | время кэширования ответов, сек |
 | `rate_limiter` | — | ограничение частоты запросов с одного клиента (`rps_by_client`, `burst`) |
 | `clientDomainManager` | — | детект DNS-туннелей: порог уникальных поддоменов (`threshold_unique_subdomains`) за окно `ttl_window` |
-| `server` | `sync_state` / `sync_logs` | облако DNS RADAR: синхронизация правил и отправка журнала запросов |
+| `sync_state` / `sync_logs` | `service_url`/ `tls_enabled` | облако DNS RADAR: синхронизация правил и отправка журнала запросов |
 
 ## 3. DNS-пересыльщик (на примере dnsmasq)
 
