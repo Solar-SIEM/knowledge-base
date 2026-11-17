@@ -1,0 +1,7 @@
+/* Блоки схем, помеченные {.no-copy}: без кнопки копирования */
+.no-copy button,
+.no-copy .md-clipboard,
+.no-copy .copy-button,
+:has(.no-copy) .copy-button {
+  display: none;
+}
